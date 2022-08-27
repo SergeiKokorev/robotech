@@ -11,7 +11,7 @@ class rtMatrix2D
     public:
         // Definthe various constructor
         rtMatrix2D();
-        rtMatrix2D(int nRows, intCols);
+        rtMatrix2D(int nRows, int nCols);
         // Constructor from linear 1D array
         rtMatrix2D(int nRows, int nCols, const T *inData);
         // Copy cstructor
@@ -42,7 +42,7 @@ class rtMatrix2D
         int getNumCols();
 
         // Overload 
-        bool operator== (const rtMatrix2D<& right)
+        bool operator== (const rtMatrix2D<T>& right);
         bool compare(const rtMatrix2D<T>& matrix1, double tolerance);
 
         // Overload +, - and * operators

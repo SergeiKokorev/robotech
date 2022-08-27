@@ -188,7 +188,7 @@ bool rtMatrix2D<T>::isSquare()
 }
 
 // Swap rows i and j. Needed to inverse matrix
-templae <class T>
+template <class T>
 void rtMatrix2D<t>::swapRow(int i, int j)
 {
     // Temp copy
@@ -355,7 +355,7 @@ bool rtMatrix2D<T>::inverse()
 // operator+
 // matrix + matrix
 template <class T>
-rtMatrix2D<T> operator+ (const rtMatrix2D<T>& left, const rtMatrix2D<T> right)
+rtMatrix2D<T> operator+ (const rtMatrix2D<T>& left, const rtMatrix2D<T>& right)
 {
     int numRows = left.m_nRows;
     int numCols = left.m_nCols;
@@ -569,7 +569,7 @@ bool rtMatrix2D<T>::operator== (const rtMatrix2D<T>& right)
     return flag;
 }
 
-// Compare two matrices needed to inverse matrix methos
+// Compare two matrices needed to inverse matrix method
 template <class T>
 bool rtMatrix2D<T>::compare(const rtMatrix2D<T>& matrix1, double tolerance)
 {
