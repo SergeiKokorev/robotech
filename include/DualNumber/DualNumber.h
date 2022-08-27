@@ -17,7 +17,7 @@ class DNumRobotech
         // Copy constructor
         DNumRobotech(const DNumRobotech<T>& DN);
         // Construct from vector
-        DNumRobotech(const std::vector<T> *inData);
+        DNumRobotech(const std::vector<T>& inData);
 
         // Destructor
         ~DNumRobotech();
@@ -103,10 +103,10 @@ DNumRobotech<T>::DNumRobotech(const DNumRobotech<T>& DN)
 }
 // From  vector
 template <class T>
-DNumRobotech<T>::DNumRobotech(const std::vector<T> *inData)
+DNumRobotech<T>::DNumRobotech(const std::vector<T>& inData)
 {
-    m_real = inData->at(0);
-    m_dual = inData->at(1);
+    m_real = inData.at(0);
+    m_dual = inData.at(1);
     m_dnData = new T[2];
     m_dnData[0] = m_real;
     m_dnData[1] = m_dual;

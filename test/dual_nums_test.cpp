@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "DualNumbers.h"
+#include "DualNumber.h"
 
 template <class T>
-void printDNums(DNumRobotech<T> dnum)
+void printDNums(const DNumRobotech<T> dnum)
 {
     std::cout << "Real part:\t" << dnum.real() << "\tDual part:\t" << dnum.dual() << "\n";
 }
@@ -15,7 +15,7 @@ int main() {
     DNumRobotech<double> dNum;
     std::cout << "Default constructor:\t" << "Real: " << dNum.real() << "\tDual: " << dNum.dual() << "\n";
 
-    std::vector<double>* v = new std::vector{1.5, 2.5};
+    std::vector<double> v{1.5, 2.5};
     DNumRobotech vecDNum(v);
     std::cout << "Construct from vector:\tReal: " << vecDNum.real() << "\tDual: " << vecDNum.dual() << "\n";
 
@@ -105,6 +105,7 @@ int main() {
     std::cout << "twoDNum == vecDNum:\t" << (twoDNum == vecDNum) << "\n";
     std::cout << "vecDNum == twoDNum:\t" << (twoDNum == vecDNum) << "\n";
     std::cout << "twoDNum == copyDNum:\t" << (twoDNum == copyDNum) << "\n";
+    std::cout << "copyDNum == twoDNum:\t" << (twoDNum == copyDNum) << "\n";
 
     return 0;
 }

@@ -7,10 +7,11 @@ set(ROBOTECH_LIBRARIES_DIR include)
 
 set(ROBOTECH_LIBRARIES
     DQuaternion
-    DualNumbers
+    DualNumber
     LinearAlgebra
     Quternion
     Utils
+    Vector
 )
 
 set(ROBOTECH_SOURCE main.cpp)
