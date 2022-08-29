@@ -78,4 +78,4 @@ class rtMatrix2D
 
 };
 
-#endif LINEARALGEBRA_H
+#endif // LINEARALGEBRA_H

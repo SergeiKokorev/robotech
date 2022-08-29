@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 template <class T>
 class VectorRobotech
@@ -13,7 +14,7 @@ class VectorRobotech
         // From 1D linear array
         VectorRobotech(const T *inData);
         // Constructor from vector
-        VectorRobotech(const std::vector<T>& inData);
+        VectorRobotech(const std::vector<T> *inData);
         // Copy constructor
         VectorRobotech(const VectorRobotech<T>& V);
         // Constructor from numbers
@@ -28,10 +29,10 @@ class VectorRobotech
         T getZ() const;
 
         // Element setter method
-        void setElement(size_t i, const T& e);
-        void setX(const T& x);
-        void setY(const T& y);
-        void setZ(const T& z);
+        VectorRobotech<T> setElement(size_t i, const T& e);
+        VectorRobotech<T> setX(const T& x);
+        VectorRobotech<T> setY(const T& y);
+        VectorRobotech<T> setZ(const T& z);
 
         // Overload operators mehtods
         // operator+
@@ -45,8 +46,10 @@ class VectorRobotech
 
         // Vector magnitude
         T magnitude() const;
+        // Unit (normalized) vector
+        bool norm();
 
-    private:
+    protected:
         T m_x;
         T m_y;
         T m_z;
@@ -69,29 +72,27 @@ VectorRobotech<T>::VectorRobotech() : m_x(1.0), m_y(1.0), m_z(1.0)
 template <class T>
 VectorRobotech<T>::VectorRobotech(const T *inData)
 {
-    m_x = inData[0];
-    m_y = inData[1];
-    m_z = inData[2];
     m_vData = new T[3];
     for (size_t i=0; i<3; ++i)
     {
         m_vData[i] = inData[i];
     }
+    m_x = m_vData[0];
+    m_y = m_vData[1];
+    m_z = m_vData[2];
 }
 // From vector
 template <class T>
-VectorRobotech<T>::VectorRobotech(const std::vector<T>& inData)
+VectorRobotech<T>::VectorRobotech(const std::vector<T> *inData)
 {
-    m_x = inData.at(0);
-    m_y = inData.at(1);
-    m_z = inData.at(2);
-    m_vData[0] = m_x;
-    m_vData[1] = m_y;
-    m_vData[2] = m_z;
-    // for (size_t i=0; i<3; ++i)
-    // {
-    //     m_vData[i] = inData.at(i);
-    // }
+    m_vData = new T[3];
+    for (size_t i=0; i<3; ++i)
+    {
+        m_vData[i] = inData->at(i);
+    }
+    m_x = m_vData[0];
+    m_y = m_vData[1];
+    m_z = m_vData[2];
 }
 // From nums
 template <class T>
@@ -109,9 +110,9 @@ VectorRobotech<T>::VectorRobotech(const T& x, const T& y, const T& z)
 template <class T>
 VectorRobotech<T>::VectorRobotech(const VectorRobotech<T>& V)
 {
-    m_x = V.getX();
-    m_y = V.getY();
-    m_z = V.getZ();
+    m_x = V.m_x;
+    m_y = V.m_y;
+    m_z = V.m_z;
     m_vData = new T[3];
     for (size_t i=0; i<3; ++i)
     {
@@ -157,27 +158,31 @@ T VectorRobotech<T>::getZ() const
         Setter methods
 **************************** */
 template <class T>
-void VectorRobotech<T>::setElement(size_t i, const T& value)
+VectorRobotech<T> VectorRobotech<T>::setElement(size_t i, const T& value)
 {
     m_vData[i] = value;
+    return *this;
 }
 template <class T>
-void VectorRobotech<T>::setX(const T& x)
+VectorRobotech<T> VectorRobotech<T>::setX(const T& x)
 {
     m_x = x;
     m_vData[0] = m_x;
+    return *this;
 }
 template <class T>
-void VectorRobotech<T>::setY(const T& y)
+VectorRobotech<T> VectorRobotech<T>::setY(const T& y)
 {
     m_y = y;
     m_vData[1] = m_y;
+    return *this;
 }
 template <class T>
-void VectorRobotech<T>::setZ(const T& z)
+VectorRobotech<T> VectorRobotech<T>::setZ(const T& z)
 {
     m_z = z;
     m_vData[2] = m_z;
+    return *this;
 }
 
 /* ******************************
@@ -230,4 +235,25 @@ T VectorRobotech<T>::magnitude() const
 {
     return std::sqrt(std::pow(m_x, 2) + std::pow(m_y, 2) + std::pow(m_z, 2));
 }
+
+/* ******************************
+        Normalized vector
+****************************** */
+template <class T>
+bool VectorRobotech<T>::norm()
+{
+    T magnitude = this->magnitude();
+    if(magnitude == 0){
+        return false;
+    } else {
+    m_x = m_x / magnitude;
+    m_y = m_y / magnitude;
+    m_z = m_z / magnitude;        
+    m_vData[0] = m_x;
+    m_vData[1] = m_y;
+    m_vData[2] = m_z;
+    }
+    return true;
+}
+
 #endif // VECTOR_H

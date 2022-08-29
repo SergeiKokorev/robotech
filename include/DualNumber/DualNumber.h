@@ -49,10 +49,10 @@ class DNumRobotech
         // Conjugate DN
         DNumRobotech<T> conjugate() const;
 
-        private:
+        protected:
             bool closeEnought(T f1, T f2);
 
-        private:
+        protected:
             T *m_dnData;
             T m_real;
             T m_dual;
