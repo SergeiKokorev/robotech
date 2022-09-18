@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Vector.h"
+#include "LinearAlgebra.h"
 
 
 template <class T>
@@ -8,6 +9,22 @@ void printVector(const VectorRobotech<T>& vec)
 {
     std::cout << "X=" << vec.getX() << "\tY=" << vec.getY() << "\tZ=" << vec.getZ() << "\n";
     std::cout << "Magnitude=" << vec.magnitude() << "\n";
+}
+
+template <class T>
+void printMatrix(rtMatrix2D<T>& m)
+{
+    int nRows = m.getNumRows();
+    int nCols = m.getNumCols();
+
+    for (int row=0; row<nRows; ++row)
+    {
+        for (int col=0; col<nCols; ++col)
+        {
+            std::cout << m.getElement(row, col) << " ";
+        }
+        std::cout << "\n";
+    }
 }
 
 
@@ -74,8 +91,33 @@ int main() {
     std::cout << "Cross product\n";
     std::cout << "First *  Second\n";
     printVector(v1 * v2);
-        std::cout << "Second *  First\n";
+    std::cout << "Second *  First\n";
     printVector(v2 * v1);
+
+    std::cout << "Outer product\n";
+    std::cout << "First vector v1\n";
+    printVector(v1);
+    std::cout << "Second vector v2\n";
+    printVector(v2);
+    std::cout << "v1.outer(v2)\n";
+    rtMatrix2D<double> res = v1.outer(v2);
+    printMatrix(res);
+
+    std::cout << "v2.outer(v1)\n";
+    res = v2.outer(v1);
+    printMatrix(res);
+
+    std::cout << "Wedge product of two vectors\n";
+    std::cout << "The first one v1\n";
+    printVector(v1);
+    std::cout << "The second one v2\n";
+    printVector(v2);
+    std::cout << "v1.wedge(v2)\n";
+    res = v1.wedge(v2);
+    printMatrix(res);
+    std::cout << "v2.wedge(v1)\n";
+    res = v2.wedge(v1);
+    printMatrix(res);
 
     return 0;
 }

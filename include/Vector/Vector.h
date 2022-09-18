@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 
+#include "LinearAlgebra.h"
+
 template <class T>
 class VectorRobotech
 {
@@ -43,6 +45,12 @@ class VectorRobotech
         template <class U> friend VectorRobotech<U> operator* (const VectorRobotech<U>& lhs, const VectorRobotech<U>& rhs);
         // Scalar (dot) product
         template <class U> friend U operator^ (const VectorRobotech<U>& lhs, const VectorRobotech<U>& rhs);
+
+        // Other vector methods
+        // Outer product
+        rtMatrix2D<T> outer(const VectorRobotech<T>& rhs) const;
+        rtMatrix2D<T> wedge(const VectorRobotech<T>& rhs) const;
+
 
         // Vector magnitude
         T magnitude() const;
@@ -226,6 +234,35 @@ T operator^ (const VectorRobotech<T>& lhs, const VectorRobotech<T>& rhs)
 {
     return lhs.m_x * rhs.m_x + lhs.m_y * rhs.m_y + lhs.m_z * rhs.m_z;
 }
+
+// Other vector methods
+// Outer product. Return nxn matrix
+template <class T>
+rtMatrix2D<T> VectorRobotech<T>::outer(const VectorRobotech<T>& rhs) const
+{
+    int nRows = 3;
+    int nCols = 3;
+    rtMatrix2D<T> result(nRows, nCols);
+
+    for (size_t row=0; row<3; ++row)
+    {
+        T elementRes = 0.0;        
+        for (size_t col=0; col<3; ++col)
+        {
+            T value = this->m_vData[row] * (-1) * rhs.m_vData[col];
+            result.setElement(row, col, value);
+        }
+    }
+    return result;
+}
+
+// Wedge product as v1.outer(v2) - v2.outer(v1)
+template <class T>
+rtMatrix2D<T> VectorRobotech<T>::wedge(const VectorRobotech<T>& rhs) const
+{
+    return this->outer(rhs) - rhs.outer(*this);
+}
+
 
 /* ******************************
         Magnitude
